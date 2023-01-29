@@ -2,7 +2,6 @@
 import sys
 
 from somuse import app
-from flask import request
 
 # 启动Flask Web服务
 if __name__ == '__main__':
