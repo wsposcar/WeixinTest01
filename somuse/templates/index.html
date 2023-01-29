@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Denel. - Onepage Personal Template">
+    <meta name="author" content="Paul">
+    
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/jquery.pagepiling.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+
+    <link rel="icon" href="static/favicon.ico">
+
+    <title>SoMuse - 人人都是音乐家</title>
+  </head>
+<body>
+   
+   <!-- Loader -->
+   <div class="loader">
+    <div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>
+   </div>
+  
+    <!-- Click capture -->
+   <div class="click-capture"></div>
+
+    <!-- Navbar -->  
+    <nav  class="navbar navbar-desctop">
+      <!-- <div class="position-relative w-100"> -->
+
+	    <!-- Brand-->
+	    <a class="navbar-brand" href="#">SoMuse.ai</a>
+      
+
+	  </div>
+	</nav>
+    
+
+    <nav class="navbar-bottom">
+
+	  <!-- Copyright -->
+	  <div class="copy d-none d-sm-block">© SoMuse. 2022.</div>
+    </nav>
+
+
+    <div id="pagepiling">
+
+      <!-- demonstration -->  
+      <section id="home" class="navbar-is-white text-white section pp-scrollable position-absolute" style="background-image:url('static/img/bg/contact.jpg');">
+        <div class="intro">
+          <div class="scroll-wrap">
+	          <div class="container">
+		          <div class="row">
+					 <div class="col-md-4">
+					 	<!-- <h2 class="text-white"></h2>
+					 	<p class="text-muted">SoMuse, 人人都是音乐家</p> -->
+				<h3 class="text-white ">歌词</h3>
+				<p class="text-muted mt-3" id="lyric">
+          你就像清晨的阳光</br>
+
+          走吧 亲爱的姑娘</br>
+          
+          回到我们去过的地方</br>
+          
+          共度人生最美的时光</br>
+          
+          看你微笑脸庞</br>
+          
+          走吧 亲爱的姑娘</br>
+          
+          就让我们一起流浪</br>
+          
+          在黎明来的这条路上</br>
+          
+          寻找心中向往的地方</br>
+          
+          
+          在黎明来的这条路上</br>
+          
+          寻找心中向往的地方</br>
+        </p>
+				 </div>
+				 <div class="col-md-5 offset-md-2">
+				 	<h3 class="text-white mt-4">输入关键字并用空格隔开。 点击 <span class="text-primary"> 生成AI音乐。</span></h3>
+				 	<div class="mt-5">
+						<form class="js-ajax-form">
+							<div class="form-group">
+                <input type="text" name="text" class="form-control" placeholder="阳光 姑娘 流浪" id="inp">
+				      </div>
+              <div class="form-group mb-0">
+                <button type="button" class="btn" id="submit1" onclick="fullchain()">生成</button>
+                <div id="download-area"></div>
+              </div>
+						</form>
+				 	</div>
+				 </div>
+	          </div>
+	       </div>
+       </div>
+    </div>
+   </section>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <script src="static/js/jquery-1.12.4.min.js"></script>
+  <script src="static/js/popper.min.js" ></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  <script src="static/js/jquery.validate.min.js"></script>
+  <script src="static/js/jquery.magnific-popup.min.js"></script>
+  <script src="static/js/jquery.pagepiling.min.js"></script>
+  <script src="static/js/owl.carousel.min.js"></script>
+  <script src="static/js/interface.js"></script>
+  
+</body>
+
+<script>
+  const main = document.querySelector("body");
+  var filename = "none";
+
+  function fullchain(){
+      $("#submit1").attr("disabled", "disabled");
+      $("#download-area").empty();
+      $("#download-area").append('<div style="top: 280px;" class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>')
+      //执行任务
+      $.ajax({
+          url: "/fullchain",
+          type: "POST",
+          data:{text: $("#inp").val(), ai: true, gender: "female"},
+          success: function (response) {
+            if(response=='occupied'){
+            console.log(response);
+            $("#download-area").empty();
+            $("#download-area").append("<p class='text-muted mt-3'>The service is occupied, please try later.</p>")
+            
+            $("#submit1").removeAttr("disabled");
+            }else{
+            console.log(response);
+            filename = response;
+            $("#download-area").empty();
+            $("#download-area").append("<audio style='padding-top:50px; height:100px;' controls><source src='" + response + "' type='audio/mpeg'></audio>")
+            
+            $("#submit1").removeAttr("disabled");
+            }
+            
+          }
+      });
+      $.ajax({
+          url: "/lyric",
+          type: "GET",
+          success: function (response) {
+              $("#lyric").empty()
+              $("#lyric").append(response)
+              console.log(response);
+          }
+      });
+  }
+</script>
+</html>
