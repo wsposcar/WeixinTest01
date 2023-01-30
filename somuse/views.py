@@ -32,7 +32,7 @@ def auth():
 
 
 @app.route('/msgCheck', methods=['POST'])
-def auth():
+def msgCheck():
     openid = request.form.get('openid')
     content = request.form.get('content')
     data = {
