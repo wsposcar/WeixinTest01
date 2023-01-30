@@ -11,10 +11,10 @@ def index():
 @app.route('/fullchain', methods=['GET', 'POST'])
 def fullchain():
     lyrics = request.form.get('text')
-    x = requests.post('https://somuse.asuscomm.com:88/fullchain', {'text': lyrics, 'ai': 'true', 'gender':'female'})
-    return 'https://somuse.asuscomm.com:88/' + x.text
+    x = requests.post('http://somuse.asuscomm.com:88/fullchain', {'text': lyrics, 'ai': 'true', 'gender':'female'})
+    return 'http://somuse.asuscomm.com:88/' + x.text
 
 @app.route('/lyric', methods=['GET'])
 def lyric():
-    x = requests.get('https://somuse.asuscomm.com:88/lyric')
+    x = requests.get('http://somuse.asuscomm.com:88/lyric')
     return x.text
