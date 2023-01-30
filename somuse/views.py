@@ -25,6 +25,7 @@ def lyric():
 
 @app.route('/auth', methods=['GET'])
 def auth():
+    code = request.form.get('code')
     x = request.get(
-        'GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code')
+        'GET https://api.weixin.qq.com/sns/jscode2session?appid=wx8d60bfc02a9179c2&secret=8fccb11216c2ef6c72711111b2163a19&js_code=' + code + '&grant_type=authorization_code')
     return x.json
