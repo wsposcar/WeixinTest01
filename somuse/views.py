@@ -33,9 +33,6 @@ def auth():
 
 @app.route('/msgCheck', methods=['POST'])
 def auth():
-    access = requests.get(
-        'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx8d60bfc02a9179c2&secret=8fccb11216c2ef6c72711111b2163a19')
-    access_token = access.json['access_token']
     openid = request.form.get('openid')
     content = request.form.get('content')
     data = {
@@ -45,5 +42,5 @@ def auth():
         "content": content
     }
     x = requests.post(
-        'https://api.weixin.qq.com/wxa/msg_sec_check?access_token='+access_token, data=data)
+        'https://api.weixin.qq.com/wxa/msg_sec_check', data=data)
     return x.json
