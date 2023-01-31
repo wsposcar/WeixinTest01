@@ -41,4 +41,4 @@ def msgCheck():
     }
     x = requests.post(
         'https://api.weixin.qq.com/wxa/msg_sec_check', data=data)
-    return x.json
+    return x.json()
